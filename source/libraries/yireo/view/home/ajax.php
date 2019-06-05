@@ -74,20 +74,21 @@ class YireoViewHomeAjax extends YireoView
 
 		$feeds  = array();
 		$i = 0;
-
-		foreach ($xml->channel->item as $item)
-		{
-			if ($i == $max)
+		if (!empty($xml->channel->item)) {
+			foreach ($xml->channel->item as $item)
 			{
-				break;
-			}
+				if ($i == $max)
+				{
+					break;
+				}
 
-			$feed                = array();
-			$feed['link']        = (string) $item->link;
-			$feed['title']       = (string) $item->title;
-			$feed['description'] = preg_replace('/<img([^>]+)>/', '', (string) $item->description);
-			$feeds[]             = $feed;
-			$i++;
+				$feed                = array();
+				$feed['link']        = (string) $item->link;
+				$feed['title']       = (string) $item->title;
+				$feed['description'] = preg_replace('/<img([^>]+)>/', '', (string) $item->description);
+				$feeds[]             = $feed;
+				$i++;
+			}
 		}
 
 		return $feeds;
